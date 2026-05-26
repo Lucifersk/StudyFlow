@@ -1,0 +1,432 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 218 44% 96%;
+    --foreground: 222 47% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 20%;
+
+    --primary: 203 100% 54%;
+    --primary-light: 187 100% 56%;
+    --primary-glow: 187 100% 64%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 170 78% 43%;
+    --secondary-foreground: 222 47% 8%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 5% 50%;
+
+    --accent: 187 100% 56%;
+    --accent-foreground: 222 47% 8%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 203 100% 54%;
+
+    --radius: 1rem;
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 222 55% 5%;
+    --foreground: 0 0% 98%;
+
+    --card: 222 38% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 222 38% 11%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 203 100% 54%;
+    --primary-light: 187 100% 56%;
+    --primary-glow: 187 100% 64%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 170 78% 43%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 221 32% 16%;
+    --muted-foreground: 215 18% 68%;
+
+    --accent: 187 100% 56%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 217 34% 18%;
+    --input: 217 34% 18%;
+    --ring: 203 100% 54%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif;
+
+    min-width: 320px;
+
+    background:
+      radial-gradient(circle at top,
+        rgba(34, 211, 238, 0.08),
+        transparent 35%),
+
+      radial-gradient(circle at bottom,
+        rgba(59, 130, 246, 0.10),
+        transparent 35%),
+
+      linear-gradient(to bottom,
+        #020617,
+        #0f172a);
+  }
+
+  button {
+    transition: var(--transition-smooth);
+  }
+
+  ::selection {
+    background: rgba(56, 189, 248, 0.32);
+    color: white;
+  }
+}
+
+@layer components {
+  .app-shell {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+
+    background:
+      linear-gradient(rgba(148, 163, 184, 0.02) 1px,
+        transparent 1px),
+
+      linear-gradient(90deg,
+        rgba(148, 163, 184, 0.02) 1px,
+        transparent 1px);
+
+    background-size: 44px 44px;
+  }
+
+  .app-shell::before {
+    content: '';
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+      linear-gradient(120deg,
+        transparent 0%,
+        rgba(56, 189, 248, 0.06) 42%,
+        transparent 65%),
+
+      linear-gradient(180deg,
+        rgba(15, 23, 42, 0),
+        rgba(2, 6, 23, 0.6));
+
+    animation: aurora-sweep 14s ease-in-out infinite alternate;
+  }
+
+  .glass-panel {
+    position: relative;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 1rem;
+
+    background:
+      linear-gradient(145deg,
+        rgba(15, 23, 42, 0.76),
+        rgba(15, 23, 42, 0.42));
+
+    box-shadow:
+      0 24px 70px rgba(2, 8, 23, 0.42);
+
+    backdrop-filter: blur(22px);
+
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .glass-panel:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(56, 189, 248, 0.22);
+
+    box-shadow:
+      0 28px 80px rgba(14, 165, 233, 0.12),
+      0 24px 70px rgba(2, 8, 23, 0.42);
+  }
+
+  .glass-panel::after {
+    content: '';
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    border-radius: inherit;
+
+    background:
+      linear-gradient(120deg,
+        rgba(255, 255, 255, 0.12),
+        transparent 22%,
+        transparent 72%,
+        rgba(56, 189, 248, 0.08));
+
+    opacity: 0.7;
+  }
+
+  .glass-panel>* {
+    position: relative;
+    z-index: 1;
+  }
+
+  .metric-tile,
+  .surface-card,
+  .icon-button,
+  .empty-state {
+    border-radius: 1rem;
+  }
+
+  .metric-tile {
+    display: flex;
+    gap: 1rem;
+
+    min-height: 132px;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    padding: 1rem;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      background 220ms ease;
+  }
+
+  .metric-tile:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(56, 189, 248, 0.28);
+
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .metric-icon {
+    display: inline-flex;
+
+    width: 2.5rem;
+    height: 2.5rem;
+
+    flex: 0 0 auto;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 0.85rem;
+
+    border-width: 1px;
+  }
+
+  .cinematic-stage {
+    position: relative;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(125, 211, 252, 0.14);
+
+    border-radius: 1.5rem;
+
+    background:
+      linear-gradient(120deg,
+        rgba(8, 47, 73, 0.76),
+        rgba(2, 6, 23, 0.82) 46%,
+        rgba(15, 23, 42, 0.78)),
+
+      conic-gradient(from 220deg at 28% 50%,
+        rgba(56, 189, 248, 0.18),
+        transparent 22%,
+        rgba(20, 184, 166, 0.12),
+        transparent 52%,
+        rgba(99, 102, 241, 0.14),
+        transparent 82%);
+
+    box-shadow:
+      0 34px 110px rgba(2, 8, 23, 0.58),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    backdrop-filter: blur(26px);
+  }
+
+  .cinematic-stage::after {
+    content: '';
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+      linear-gradient(rgba(148, 163, 184, 0.02) 1px,
+        transparent 1px),
+
+      linear-gradient(90deg,
+        rgba(148, 163, 184, 0.02) 1px,
+        transparent 1px);
+
+    background-size: 34px 34px;
+
+    mask-image:
+      linear-gradient(to bottom,
+        black,
+        transparent 86%);
+  }
+
+  .cinema-stat {
+    min-height: 190px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 1rem;
+
+    background:
+      linear-gradient(145deg,
+        rgba(255, 255, 255, 0.06),
+        rgba(255, 255, 255, 0.025));
+
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .cinema-stat:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(56, 189, 248, 0.22);
+
+    box-shadow:
+      0 18px 60px rgba(14, 165, 233, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .cinema-timer-shell {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .cinema-timer-shell::before {
+    content: '';
+
+    position: absolute;
+    inset: -1.15rem;
+
+    border-radius: 999px;
+
+    background:
+      conic-gradient(from 0deg,
+        transparent,
+        rgba(56, 189, 248, 0.22),
+        transparent 34%,
+        rgba(20, 184, 166, 0.14),
+        transparent 67%,
+        rgba(129, 140, 248, 0.14),
+        transparent);
+
+    filter: blur(10px);
+
+    opacity: 0.55;
+
+    animation: cinematic-spin 9s linear infinite;
+
+    z-index: -2;
+  }
+
+  .cinema-timer-shell::after {
+    content: '';
+
+    position: absolute;
+    inset: 8%;
+
+    border-radius: 999px;
+
+    border: 1px solid rgba(125, 211, 252, 0.12);
+
+    box-shadow:
+      inset 0 0 44px rgba(14, 165, 233, 0.08);
+
+    z-index: -1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@keyframes aurora-sweep {
+  from {
+    transform: translateX(-5%);
+    opacity: 0.65;
+  }
+
+  to {
+    transform: translateX(5%);
+    opacity: 1;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes cinematic-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
